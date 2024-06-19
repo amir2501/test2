@@ -202,7 +202,7 @@ const country_code = {
 
 
 const app = express();
-const port = 1000;
+const port = 3000;
 app.use(bodyParser.urlencoded({extended: true}));
 
 
@@ -223,6 +223,7 @@ app.get('/detailed_info', async (req, res) => {
     let result = await axios.get('https://restcountries.com/v3.1/all')
     let currency_rate_result = await axios.get('https://v6.exchangerate-api.com/v6/785ab6563ebcbc8ef876df65/latest/USD')
 
+
     result = result.data[id];
     let lang = Object.keys(result.languages)[0];
     let native_name_array = result.name.nativeName;
@@ -233,8 +234,20 @@ app.get('/detailed_info', async (req, res) => {
     let border_countries = result.borders;
     let cca3 = Object.keys(result.currencies)[0];
 
-    let current_currency = Object(currency_rate_result.data.conversion_rates)[cca3]
+    let capital = result.capital[0]
+    console.log(capital)
 
+    const today_weather = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=dec2154d681dd6d6fd067f1fd922dcad&units=metric`
+    );
+    let current_currency = Object(currency_rate_result.data.conversion_rates)[cca3]
+    let temp = today_weather.data.main.temp;
+    temp = Math.floor( Number(temp))
+
+
+    const current_conditon = today_weather.data.weather[0]
+    console.log(temp)
+    console.log(current_conditon)
     // console.log(id);
     // console.log(result)
     // console.log("---------------------")
@@ -244,10 +257,11 @@ app.get('/detailed_info', async (req, res) => {
     // console.log(currencies)
     // console.log(border_countries)
 
-    !current_currency && (current_currency= 'no information')
+    !current_currency && (current_currency = 'no information')
 
-    console.log(current_currency)
-    console.log(cca3)
+    // console.log(current_currency)
+    // console.log(cca3)
+    // console.log(today_weather.data)
 
     let find_country = (arr) => {
         if (arr) {
@@ -274,6 +288,8 @@ app.get('/detailed_info', async (req, res) => {
         countries: countries,
         cca3: cca3,
         current_currency: current_currency,
+        temp: temp,
+        current_conditon: current_conditon,
     })
 })
 
@@ -283,8 +299,4 @@ app.listen(port, () => {
 });
 
 
-let search_country = function (event) {
-    console.log(event);
-    console.log("siu");
-}
 
