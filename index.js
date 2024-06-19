@@ -202,7 +202,7 @@ const country_code = {
 
 
 const app = express();
-const port = 3000;
+const port = 1000;
 app.use(bodyParser.urlencoded({extended: true}));
 
 
@@ -221,6 +221,7 @@ app.get('/', async (req, res) => {
 app.get('/detailed_info', async (req, res) => {
     let id = req.query.id;
     let result = await axios.get('https://restcountries.com/v3.1/all')
+    let currency_rate_result = await axios.get('https://v6.exchangerate-api.com/v6/785ab6563ebcbc8ef876df65/latest/USD')
 
     result = result.data[id];
     let lang = Object.keys(result.languages)[0];
@@ -230,33 +231,40 @@ app.get('/detailed_info', async (req, res) => {
     let languages = Object.values(result.languages);
     let currencies = Object.values(result.currencies);
     let border_countries = result.borders;
+    let cca3 = Object.keys(result.currencies)[0];
 
-    console.log(id);
-    console.log(result)
-    console.log("---------------------")
-    console.log(native_name)
-    console.log(Object.keys(result.languages)[0]);
-    console.log(languages)
-    console.log(currencies)
-    console.log(border_countries)
+    let current_currency = Object(currency_rate_result.data.conversion_rates)[cca3]
+
+    // console.log(id);
+    // console.log(result)
+    // console.log("---------------------")
+    // console.log(native_name)
+    // console.log(Object.keys(result.languages)[0]);
+    // console.log(languages)
+    // console.log(currencies)
+    // console.log(border_countries)
+
+    !current_currency && (current_currency= 'no information')
+
+    console.log(current_currency)
+    console.log(cca3)
 
     let find_country = (arr) => {
-        if (arr){
+        if (arr) {
             let array = []
             for (let i = 0; i < arr.length; i++) {
                 typeof (country_code[arr[i]]) == "string" && array.push(country_code[arr[i]])
             }
             return array;
-        }
-       else{
-           console.log("error")
+        } else {
+            console.log("error")
             return ['No border countries']
         }
     }
 
     let countries = find_country(border_countries)
 
-    console.log(countries)
+    // console.log(countries)
 
     res.render('more_info.ejs', {
         result: result,
@@ -264,11 +272,9 @@ app.get('/detailed_info', async (req, res) => {
         languages: languages,
         currencies: currencies,
         countries: countries,
+        cca3: cca3,
+        current_currency: current_currency,
     })
-})
-
-app.get("/clicked_border_country", async (req, res) => {
-
 })
 
 
