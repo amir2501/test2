@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="eng">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Countries</title>
+    <link rel="stylesheet" href="styles.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+          rel="stylesheet">
+</head>
+<body id="body" class="day">
+
+<%- include('./partials/header'); -%>
+
+<main>
+    <!--    <form method="post" action="search" onsubmit="">-->
+    <!--        <input type="text" placeholder="Search for a country" id="search" name="search">-->
+    <!--    </form>-->
+
+    <ul>
+        <% for (let i in result) { %>
+            <li id=<%= i %>>
+                <form action="/detailed_info" id="more_info" method="get">
+                    <input type="hidden" name="id" value="<%= i %>"/>
+                    <button type="submit">
+                        <img alt="flag of countries" src= <%= result[i].flags.png %>>
+                        <div class="info-box">
+
+                            <h1>
+                                <%= result[i].name.common %>
+                            </h1>
+
+                            <h2>
+                                Capital:
+                                <span>
+                            <%= result[i].capital %>
+                        </span>
+                            </h2>
+
+                            <h2>
+                                Region:
+                                <span>
+                            <%= result[i].region %>
+                        </span>
+                            </h2>
+
+                            <h2>
+                                Population:
+                                <span>
+                            <%= result[i].population %>
+                        </span>
+                            </h2>
+                        </div>
+                    </button>
+
+                </form>
+            </li>
+        <% } %>
+
+    </ul>
+</main>
+
+<script>
+    let body = document.getElementById("body")
+    let header = document.getElementById("header")
+    let theme = document.getElementById("theme")
+    theme.addEventListener('click', () => {
+        body.classList.toggle('day');
+        body.classList.toggle('night');
+        header.classList.toggle('day');
+        header.classList.toggle('night');
+        body.classList.contains('night') ? theme.innerHTML = "Dark mode" : theme.innerHTML = "Light mode"
+
+    })
+</script>
+
+</body>
+</html>

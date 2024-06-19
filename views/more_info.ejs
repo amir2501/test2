@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="eng">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Countries</title>
+    <link rel="stylesheet" href="more_info.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+          rel="stylesheet">
+</head>
+
+
+<body id="body" class="day">
+<%- include('./partials/header'); -%>
+<main>
+    <a href='/'> Back </a>
+    <article>
+        <img src="<%= result.flags.png %>" alt="<%= result.flags.alt %>">
+        <div class="text-box">
+            <h1>
+                <%= result.name.common %>
+            </h1>
+            <ul>
+                <li>
+                    <h2>
+                        Native Name: <span> <%= native_name %> </span>
+                    </h2>
+
+                    <h2>
+                        Population: <span> <%= result.population %> </span>
+                    </h2>
+
+                    <h2>
+                        Region: <span> <%= result.region %> </span>
+                    </h2>
+
+                    <h2>
+                        Region: <span> <%= result.subregion %> </span>
+                    </h2>
+
+                    <h2>
+                        Capital: <span> <%= result.capital %> </span>
+                    </h2>
+                </li>
+
+                <li>
+                    <h2>
+                        Top Level Domain: <span>
+                            <%= result.tld %>
+                        </span>
+                    </h2>
+
+                    <h2>
+                        Currencies:
+                        <% for (let i in currencies) { %>
+                            <span><%= currencies[i].name %> <%= currencies.length > 1 ? ",  " : " " %> </span>
+                        <% } %>
+                    </h2>
+
+                    <h2>
+                        Languages:
+                        <% for (let i in languages) { %>
+                            <span><%= languages[i] %><%= languages.length > 1 ? ",  " : " " %>  </span>
+                        <% } %>
+                    </h2>
+                </li>
+            </ul>
+
+            <h2>
+                Border countries:
+                <% for (let i in countries) { %>
+                    <span><%= countries[i] %> </span>
+                <% } %>
+            </h2>
+
+        </div>
+    </article>
+</main>
+
+<script>
+    let body = document.getElementById("body")
+    let header = document.getElementById("header")
+    let theme = document.getElementById("theme")
+    theme.addEventListener('click', () => {
+        body.classList.toggle('day');
+        body.classList.toggle('night');
+        header.classList.toggle('day');
+        header.classList.toggle('night');
+        body.classList.contains('night') ? theme.innerHTML = "Dark mode" : theme.innerHTML = "Light mode"
+
+    })
+</script>
+</body>
+</html>
