@@ -17,9 +17,10 @@
 <%- include('./partials/header'); -%>
 
 <main>
-    <!--    <form method="post" action="search" onsubmit="">-->
-    <!--        <input type="text" placeholder="Search for a country" id="search" name="search">-->
-    <!--    </form>-->
+    <form method="get" action="search">
+        <input type="text" placeholder="Search for a country" id="search" name="search"/>
+        <button type="submit" id="button">Search</button>
+    </form>
 
     <ul>
         <% for (let i in result) { %>

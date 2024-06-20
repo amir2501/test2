@@ -12,10 +12,12 @@ body {
     align-items: center;
     justify-content: center;
 }
-body.day{
+
+body.day {
     background-color: hsl(0, 0%, 98%);
 }
-body.night{
+
+body.night {
     background-color: hsl(209, 23%, 22%);
 }
 
@@ -29,20 +31,52 @@ header {
     padding: 2rem;
 }
 
-#theme{
+#theme {
     cursor: pointer;
 }
 
-header.day{
+header.day {
     background: hsl(0, 0%, 100%);
     color: hsl(200, 15%, 8%);
     box-shadow: 0px 0px 20px hsl(0, 0%, 52%);
 }
 
-header.night{
+header.night {
     background-color: hsl(209, 23%, 22%);
     color: white;
-    box-shadow: 0px 0px 20px  hsl(0, 0%, 16%);
+    box-shadow: 0px 0px 20px hsl(0, 0%, 16%);
+}
+
+main > form {
+    display: flex;
+    margin: auto;
+    max-width: 80vw;
+
+}
+
+form input {
+    background-color: hsl(0, 0%, 100%);
+    box-shadow: 0px 0px 15px hsl(0, 0%, 88%);
+    padding: 0.7rem 2rem;
+    max-width: 70vw;
+    border: none;
+    border-radius: 0.8rem;
+
+}
+
+#button {
+    background-color: hsl(0, 0%, 100%);
+    box-shadow: 0px 0px 15px hsl(0, 0%, 88%);
+    padding: 0.7rem 2rem;
+    border: none;
+    margin-left: 2rem;
+    transition: 0.7s;
+    opacity: 0;
+}
+
+form input:focus + #button {
+    transition: 0.7s;
+    opacity: 1 !important;
 }
 
 .day main {
@@ -50,7 +84,29 @@ header.night{
     color: hsl(200, 15%, 8%);
     max-width: 90vw;
 
+
+    form input {
+        background-color: hsl(0, 0%, 100%);
+        box-shadow: 0px 0px 15px hsl(0, 0%, 88%);
+
+    }
+
+    #button {
+        background-color: hsl(0, 0%, 100%);
+        box-shadow: 0px 0px 15px hsl(0, 0%, 88%);
+        padding: 0.7rem 2rem;
+        border: none;
+        margin-left: 2rem;
+        transition: 0.7s;
+        opacity: 0;
+    }
+
+    form input:focus + #button {
+        transition: 0.7s;
+        opacity: 1 !important;
+    }
 }
+
 
 .day main ul {
     display: flex;
@@ -58,11 +114,11 @@ header.night{
     justify-content: center;
     flex-wrap: wrap;
 
-    li:hover{
+    li:hover {
         scale: 92%;
     }
 
-    button:hover{
+    button:hover {
         cursor: pointer;
     }
 
@@ -75,11 +131,11 @@ header.night{
         box-shadow: 0px 0px 15px hsl(0, 0%, 88%);
 
 
-         input{
+        input {
             visibility: hidden;
         }
 
-        button{
+        button {
             border: none;
             background: inherit;
         }
@@ -119,7 +175,31 @@ header.night{
     color: hsl(0, 0%, 100%);
     max-width: 90vw;
 
+
+    form input {
+        background-color: hsl(209, 23%, 22%);
+        color: white;
+        box-shadow: 0px 0px 15px hsl(0, 0%, 16%);
+        border-radius: 0.8rem;
+    }
+
+    #button {
+        background-color: hsl(209, 23%, 22%);
+        padding: 0.7rem 2rem;
+        box-shadow: 0px 0px 15px hsl(0, 0%, 16%);
+        border: none;
+        margin-left: 2rem;
+        transition: 0.7s;
+        opacity: 0;
+        color: white;
+    }
+
+    form input:focus + #button {
+        transition: 0.7s;
+        opacity: 1 !important;
+    }
 }
+
 /*night*/
 .night main ul {
     display: flex;
@@ -127,11 +207,11 @@ header.night{
     justify-content: center;
     flex-wrap: wrap;
 
-    li:hover{
+    li:hover {
         scale: 92%;
     }
 
-    button:hover{
+    button:hover {
         cursor: pointer;
     }
 
@@ -144,11 +224,11 @@ header.night{
         box-shadow: 0px 0px 15px hsl(0, 0%, 16%);
 
 
-        input{
+        input {
             visibility: hidden;
         }
 
-        button{
+        button {
             border: none;
             background: inherit;
         }
@@ -187,17 +267,17 @@ header.night{
 }
 
 @media screen and (max-width: 800px) {
-    header{
-        h1{
+    header {
+        h1 {
             font-size: 1.5rem;
         }
     }
 
-    body.day{
+    body.day {
         color: black;
     }
 
-    .info-box{
+    .info-box {
         display: flex;
         align-items: start;
         flex-direction: column;
