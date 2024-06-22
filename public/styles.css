@@ -107,6 +107,10 @@ form input:focus + #button {
     }
 }
 
+main ul li a {
+    text-decoration: none;
+    color: inherit;
+}
 
 .day main ul {
     display: flex;

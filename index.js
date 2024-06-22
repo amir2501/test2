@@ -219,88 +219,88 @@ app.get('/', async (req, res) => {
 })
 
 app.get('/search', async (req, res) => {
-  try {
-      let search = req.query.search;
-      let result = await axios.get(`https://restcountries.com/v3.1/name/${search}`)
-      result = result.data[0]
-      let currency_rate_result = await axios.get('https://v6.exchangerate-api.com/v6/785ab6563ebcbc8ef876df65/latest/USD')
+    try {
+        let search = req.query.search;
+        let result = await axios.get(`https://restcountries.com/v3.1/name/${search}`)
+        result = result.data[0]
+        let currency_rate_result = await axios.get('https://v6.exchangerate-api.com/v6/785ab6563ebcbc8ef876df65/latest/USD')
 
-      console.log(result.data)
-      console.log(search);
+        console.log(result.data)
+        console.log(search);
 
-      let lang = Object.keys(result.languages)[0];
-      let native_name_array = result.name.nativeName;
-      let key = Object.keys(native_name_array)[0];
-      let native_name = native_name_array[key].official;
-      let languages = Object.values(result.languages);
-      let currencies = Object.values(result.currencies);
-      let border_countries = result.borders;
-      let cca3 = Object.keys(result.currencies)[0];
+        let lang = Object.keys(result.languages)[0];
+        let native_name_array = result.name.nativeName;
+        let key = Object.keys(native_name_array)[0];
+        let native_name = native_name_array[key].official;
+        let languages = Object.values(result.languages);
+        let currencies = Object.values(result.currencies);
+        let border_countries = result.borders;
+        let cca3 = Object.keys(result.currencies)[0];
 
-      let capital = result.capital[0]
-      console.log(capital)
+        let capital = result.capital[0]
+        console.log(capital)
 
-      const today_weather = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=dec2154d681dd6d6fd067f1fd922dcad&units=metric`
-      );
-      let current_currency = Object(currency_rate_result.data.conversion_rates)[cca3]
-      let temp = today_weather.data.main.temp;
-      temp = Math.floor(Number(temp))
+        const today_weather = await axios.get(
+            `https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=dec2154d681dd6d6fd067f1fd922dcad&units=metric`
+        );
+        let current_currency = Object(currency_rate_result.data.conversion_rates)[cca3]
+        let temp = today_weather.data.main.temp;
+        temp = Math.floor(Number(temp))
 
 
-      const current_conditon = today_weather.data.weather[0]
-      console.log(temp)
-      console.log(current_conditon)
+        const current_conditon = today_weather.data.weather[0]
+        console.log(temp)
+        console.log(current_conditon)
 
-      !current_currency && (current_currency = 'no information')
+        !current_currency && (current_currency = 'no information')
 
-      // console.log(current_currency)
-      // console.log(cca3)
-      // console.log(today_weather.data)
+        // console.log(current_currency)
+        // console.log(cca3)
+        // console.log(today_weather.data)
 
-      let find_country = (arr) => {
-          if (arr) {
-              let array = []
-              for (let i = 0; i < arr.length; i++) {
-                  typeof (country_code[arr[i]]) == "string" && array.push(country_code[arr[i]])
-              }
-              return array;
-          } else {
-              console.log("error")
-              return ['No border countries']
-          }
-      }
+        let find_country = (arr) => {
+            if (arr) {
+                let array = []
+                for (let i = 0; i < arr.length; i++) {
+                    typeof (country_code[arr[i]]) == "string" && array.push(country_code[arr[i]])
+                }
+                return array;
+            } else {
+                console.log("error")
+                return ['No border countries']
+            }
+        }
 
-      let countries = find_country(border_countries)
+        let countries = find_country(border_countries)
 
-      // console.log(countries)
+        // console.log(countries)
 
-      res.render('more_info.ejs', {
-          result: result,
-          native_name: native_name,
-          languages: languages,
-          currencies: currencies,
-          countries: countries,
-          cca3: cca3,
-          current_currency: current_currency,
-          temp: temp,
-          current_conditon: current_conditon,
-      })
-  }
-  catch (error){
-      res.redirect('/')
-  }
+        res.render('more_info.ejs', {
+            result: result,
+            native_name: native_name,
+            languages: languages,
+            currencies: currencies,
+            countries: countries,
+            cca3: cca3,
+            current_currency: current_currency,
+            temp: temp,
+            current_conditon: current_conditon,
+        })
+    } catch (error) {
+        res.redirect('/')
+    }
 
 
 })
 
 app.get('/detailed_info', async (req, res) => {
-    let id = req.query.id;
-    let result = await axios.get('https://restcountries.com/v3.1/all')
+
+    let code = req.query.code;
+    console.log(code)
+    let result = await axios.get(`https://restcountries.com/v3.1/alpha?codes=${code}`)
     let currency_rate_result = await axios.get('https://v6.exchangerate-api.com/v6/785ab6563ebcbc8ef876df65/latest/USD')
 
-
-    result = result.data[id];
+    result = result.data[0];
     let lang = Object.keys(result.languages)[0];
     let native_name_array = result.name.nativeName;
     let key = Object.keys(native_name_array)[0];
@@ -322,8 +322,8 @@ app.get('/detailed_info', async (req, res) => {
 
 
     const current_conditon = today_weather.data.weather[0]
-    console.log(temp)
-    console.log(current_conditon)
+    // console.log(temp)
+    // console.log(current_conditon)
     // console.log(id);
     // console.log(result)
     // console.log("---------------------")
@@ -373,6 +373,3 @@ app.get('/detailed_info', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
-
-
-

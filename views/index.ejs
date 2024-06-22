@@ -25,40 +25,37 @@
     <ul>
         <% for (let i in result) { %>
             <li id=<%= i %>>
-                <form action="/detailed_info" id="more_info" method="get">
-                    <input type="hidden" name="id" value="<%= i %>"/>
-                    <button type="submit">
-                        <img alt="flag of countries" src= <%= result[i].flags.png %>>
-                        <div class="info-box">
+                <a href="/detailed_info?code=<%= result[i].cca3 %>">
+                    <img alt="flag of countries" src= <%= result[i].flags.png %>>
+                    <div class="info-box">
 
-                            <h1>
-                                <%= result[i].name.common %>
-                            </h1>
+                        <h1>
+                            <%= result[i].name.common %>
+                        </h1>
 
-                            <h2>
-                                Capital:
-                                <span>
+                        <h2>
+                            Capital:
+                            <span>
                             <%= result[i].capital %>
                         </span>
-                            </h2>
+                        </h2>
 
-                            <h2>
-                                Region:
-                                <span>
+                        <h2>
+                            Region:
+                            <span>
                             <%= result[i].region %>
                         </span>
-                            </h2>
+                        </h2>
 
-                            <h2>
-                                Population:
-                                <span>
+                        <h2>
+                            Population:
+                            <span>
                             <%= result[i].population %>
                         </span>
-                            </h2>
-                        </div>
-                    </button>
+                        </h2>
+                    </div>
+                </a>
 
-                </form>
             </li>
         <% } %>
 
