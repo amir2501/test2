@@ -210,7 +210,6 @@ app.use(express.static("public"));
 
 app.get('/', async (req, res) => {
     let result = await axios.get('https://restcountries.com/v3.1/all')
-    console.log(result.data.length);
 
 
     res.render('index.ejs', {
